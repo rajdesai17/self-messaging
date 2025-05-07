@@ -3,7 +3,12 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const ACCESS_TOKEN = "PASTE_YOUR_ACCESS_TOKEN_HERE"; // <-- Paste your token here
+const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
+
+if (!ACCESS_TOKEN) {
+    console.error("ACCESS_TOKEN not found in environment variables");
+    process.exit(1);
+}
 
 async function main() {
     // 1. Get your user profile

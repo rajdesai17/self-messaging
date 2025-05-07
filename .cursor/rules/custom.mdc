@@ -1,0 +1,126 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Microsoft Teams Self-Messaging Implementation Rules
+
+## 1. Azure AD Application Setup
+- Register new application in Azure Portal
+- Configure supported account types for organizational and personal accounts
+- Document and securely store:
+  - Application (client) ID
+  - Directory (tenant) ID
+  - Client secret
+
+## 2. API Permissions Configuration
+Required Microsoft Graph API permissions:
+- Chat.ReadWrite
+- Chat.Create
+- User.Read.All
+- Ensure admin consent is granted
+- Document all permission scopes
+
+## 3. Authentication Flow
+- Implement OAuth 2.0 client credentials flow
+- Token endpoint: https://login.microsoftonline.com/{tenant-id}/oauth2/v2.0/token
+- Required parameters:
+  - client_id
+  - client_secret
+  - scope
+  - grant_type
+- Handle token expiration and refresh
+- Secure storage of tokens
+
+## 4. API Endpoints Implementation
+### User Profile
+- Endpoint: GET https://graph.microsoft.com/v1.0/me
+- Required headers:
+  - Authorization: Bearer {access-token}
+- Handle user profile retrieval
+- Store user ID securely
+
+### Chat Creation
+- Endpoint: POST https://graph.microsoft.com/v1.0/chats
+- Required headers:
+  - Authorization: Bearer {access-token}
+  - Content-Type: application/json
+- Required body:
+  - chatType: "oneOnOne"
+  - members array with user binding
+- Store chat ID securely
+
+### Message Sending
+- Endpoint: POST https://graph.microsoft.com/v1.0/chats/{chat-id}/messages
+- Required headers:
+  - Authorization: Bearer {access-token}
+  - Content-Type: application/json
+- Required body:
+  - message content
+- Handle message delivery confirmation
+
+## 5. Security Requirements
+- Secure storage of credentials
+- Environment variable usage
+- Input validation
+- Error handling
+- Rate limiting implementation
+- HTTPS enforcement
+- Token security
+
+## 6. Error Handling
+- Authentication errors
+- API rate limiting
+- Network failures
+- Invalid responses
+- Token expiration
+- Permission issues
+
+## 7. Testing Requirements
+- Authentication flow testing
+- API endpoint testing
+- Error scenario testing
+- Rate limit testing
+- Security testing
+- Integration testing
+
+## 8. Monitoring
+- API call tracking
+- Error rate monitoring
+- Token usage monitoring
+- Rate limit monitoring
+- Performance monitoring
+
+## 9. Documentation
+- API endpoint documentation
+- Authentication flow documentation
+- Error handling documentation
+- Configuration documentation
+- Deployment documentation
+
+## 10. Deployment Checklist
+- Environment variables configured
+- API permissions verified
+- Security measures implemented
+- Error handling in place
+- Monitoring configured
+- Documentation complete
+
+## 11. Maintenance
+- Regular token refresh
+- Permission verification
+- Error log review
+- Performance monitoring
+- Security updates
+- API version updates
+
+## 12. Best Practices
+- Use environment variables
+- Implement proper error handling
+- Follow security guidelines
+- Maintain comprehensive logging
+- Regular security audits
+- Keep dependencies updated
+- Follow API rate limits
+- Implement retry mechanisms
+
